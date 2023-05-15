@@ -1,6 +1,6 @@
 from time import sleep
 import random
-import headers_labels as hl
+import headers_menus as hm
 import fishingGraphic as fg
 import os
 
@@ -121,6 +121,9 @@ class Fish:
     
 
     def catchDescription(self):
+
+        clearScreen()
+
         return f"You caught a {self.size} pound {self.name} worth {self.value}!"
 
 
@@ -134,12 +137,13 @@ class Player:
         self.maxInventory = 4
         self.catchingPower = 1
         self.quarters = "Campsite"
-        self.energy = 15
+        self.energy = 10
         self.energyToFish = 5
         self.location = "BARREL"
 
     
     def addToInventory(self, newThing):
+        
         print(f"{newThing.name} added to your inventory")
         self.inventory.append(newThing)
     
@@ -169,11 +173,23 @@ class Player:
     
 
     def checkEnergy(self):
+
         if self.energy < self.energyToFish:
             return False
-        # else:
-        #     return True
+        
+        return True
+        
+
+    def checkInventory(self):
+        if len[self.inventory] > self.maxInventory:
+
+            clearScreen()
+
+            input("""    Your inventory is full.
     
+    Press enter.  """)
+
+            return False    
 
     def payEnergyCost(self):
         self.energy -= self.energyToFish
@@ -197,6 +213,7 @@ class Item:
 class Location:
     
     def __init__(self):
+
         self.name = None
         self.sizeModifier = None
 
@@ -230,10 +247,11 @@ def clearScreen():
 
 def fishOrJunk():
 
-    if player.checkEnergy() == False:
+    if not player.checkEnergy():
         
-        print("Not enough energy to fish any more today.")
-        input("Press Enter")
+        input("""   Not enough energy to fish any more today.
+    Press Enter""")
+        
         return
     
     if not chooseFishingLocation():
@@ -258,7 +276,7 @@ def catchFish():
     
     Press Enter""")
 
-    if not player.checkEnergy:
+    if not player.checkInventory():
         print("You don't have inventory space.")
         pass
     player.inventory.append(fish)
@@ -271,17 +289,20 @@ def chooseFishingLocation():
 
         clearScreen()
 
-        print("""Where would you like to fish?
+        hm.fishingLocationsMenu()
 
-1. The rain barrel
-2. Pond
-3. Small lake
-4. Large lake
-5. Creek
-6. River)
-""")
+#         print("""Where would you like to fish?
 
-        selection = input("Option #:  ")
+# 1. The rain barrel
+# 2. Pond
+# 3. Small lake
+# 4. Large lake
+# 5. Creek
+# 6. River)
+# """)
+
+        selection = input("""
+    Option #:  """)
 
         try:
             selection = int(selection)
@@ -330,9 +351,9 @@ def chooseFishingLocation():
         
         else:
             clearScreen()
-            input(f"""You entered "{selection}", which is not a valid location number.
+            input(f"""    You entered "{selection}", which is not a valid location number.
             
-Press enter""")
+    Press enter  """)
 
 
 player = Player()
@@ -343,8 +364,7 @@ while True:
 
     clearScreen()
 
-    # hl.gameplayMenu(player.quarters)
-
+    hm.gameplayMenu(player)
 
     q = input("""
     Option #: """)
