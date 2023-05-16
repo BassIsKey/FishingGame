@@ -151,6 +151,7 @@ class Player:
     def printInventory(self):
 
         clearScreen()
+        hm.inventoryHeader()
 
         if len(player.inventory) < 1:
             input("""Your inventory is empty.
@@ -181,7 +182,7 @@ class Player:
         
 
     def checkInventory(self):
-        if len[self.inventory] > self.maxInventory:
+        if len(self.inventory) >= self.maxInventory:
 
             clearScreen()
 
@@ -189,7 +190,9 @@ class Player:
     
     Press enter.  """)
 
-            return False    
+            return False
+        
+        return True
 
     def payEnergyCost(self):
         self.energy -= self.energyToFish
@@ -269,6 +272,19 @@ def fishOrJunk():
     return
 
 
+def inventoryMakeRoom():
+
+    Fish.catchDescription()
+    hm.inventoryHeader()
+
+    player.printInventory()
+
+    print("    Choose the number of the inventory item to throw back")
+    selection = input(    "Option #:  ")
+
+
+
+
 def catchFish():
     fish = Fish.createFishObject()
 
@@ -288,18 +304,7 @@ def chooseFishingLocation():
     while True:
 
         clearScreen()
-
         hm.fishingLocationsMenu()
-
-#         print("""Where would you like to fish?
-
-# 1. The rain barrel
-# 2. Pond
-# 3. Small lake
-# 4. Large lake
-# 5. Creek
-# 6. River)
-# """)
 
         selection = input("""
     Option #:  """)
