@@ -181,18 +181,15 @@ class Player:
         return True
         
 
-    def checkInventory(self):
+    def fullInventoryWarning(self):
+
         if len(self.inventory) >= self.maxInventory:
-
             clearScreen()
-
-            input("""    Your inventory is full.
+            input("""
+    Your inventory is full. You will need to release your next catch
+    or make room in your inventory after your next catch.
     
     Press enter.  """)
-
-            return False
-        
-        return True
 
     def payEnergyCost(self):
         self.energy -= self.energyToFish
@@ -292,7 +289,7 @@ def catchFish():
     
     Press Enter""")
 
-    if not player.checkInventory():
+    if not player.fullInventoryWarning():
         print("You don't have inventory space.")
         pass
     player.inventory.append(fish)
@@ -302,17 +299,21 @@ def catchFish():
 def chooseFishingLocation():
 
     while True:
+        #Sets player location attributes. Takes input from menu options, checks prerequisites, adn either
+        #returns false if requirements not met, or sets location attribute if requirements met.
 
         clearScreen()
         hm.fishingLocationsMenu()
 
         selection = input("""
-    Option #:  """)
+    Option:  """)
 
         try:
             selection = int(selection)
         
         except:
+            if selection == "x" or selection == "X":
+                return main()
             pass
 
         if selection == 1:
@@ -321,21 +322,24 @@ def chooseFishingLocation():
         
         elif selection == 2:
             if player.level < 1:
-                input("You must be Level 1 to fish in the pond. Press Enter")
+                input("""
+    You must be Level 1 to fish in the pond. Press Enter""")
                 return False
             player.location = "POND"
             return True
         
         elif selection == 3:
             if player.level < 4:
-                input("You must be level 4 to fish in the small lake. Press Enter")
+                input("""
+    You must be level 4 to fish in the small lake. Press Enter""")
                 return False
             player.location = "SMALL LAKE"
             return True
         
         elif selection == 4:
             if player.level < 6:
-                input("You must be level 4 to fish in the small lake. Press Enter")
+                input("""
+    You must be level 6 to fish in the small lake. Press Enter""")
                 return False
             player.location = "LARGE LAKE"
             return True
@@ -361,15 +365,23 @@ def chooseFishingLocation():
     Press enter  """)
 
 
-player = Player()
-location = Location()
+def tempGoFishing():
+
+    #check energy
+    if not player.checkEnergy():
+        return
+    
+    #warn if full inventory
+    player.fullInventoryWarning()
+    
+    #where to fish
+    chooseFishingLocation()
 
 
-while True:
+def main():
 
     clearScreen()
-
-    hm.gameplayMenu(player)
+    hm.mainMenu(player)
 
     q = input("""
     Option #: """)
@@ -386,4 +398,10 @@ while True:
     elif q == "5":
         player.printInventory()
 
-    # sleep(3)
+player = Player()
+location = Location()
+
+
+while True:
+
+    main()

@@ -64,9 +64,17 @@ def lodgingQuartersHeader():
 ***********************************************************************************""")
 
 
-def gameplayMenu(player):
-    print(f"""
+def whereToFishHeader():
+    print("""
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                     *          Where To Fish            *
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+***********************************************************************************""")
+
+
+def mainMenu(player):
+    print(f"""
     1. Go fishing!                       2. Bait Bucket
     3. Bait Shop                         4. Visit {player.quarters}
     5. View Inventory
@@ -98,4 +106,6 @@ def fishingLocationsMenu():
     3. Small lake
     4. Large lake
     5. Creek
-    6. River)""")
+    6. River)
+    
+    "X" to return.""")
