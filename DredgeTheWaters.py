@@ -154,23 +154,24 @@ class Player:
         hm.inventoryHeader()
 
         if len(player.inventory) < 1:
-            input("""Your inventory is empty.
+            input("""
+    Your inventory is empty.
             
-            Press enter  """)
+    Press enter  """)
             return
         
         y = 1
-
+        print("")
         for i in self.inventory:
             if type(i) == Fish:
-                print(f"""        {y}. {i.name} ({i.size})  Value: {i.value}""")
+                print(f"""    {y}. {i.name} ({i.size})  Value: {i.value}""")
             elif type(i) == Item:
                 for i in player.inventory:
-                    print(f"""        {y}. {i.name} ({i.rarity})  Value: {i.value}""")
+                    print(f"""    {y}. {i.name} ({i.rarity})  Value: {i.value}""")
             y += 1
 
         input("""
-              PRESS ENTER""")
+    PRESS ENTER""")
     
 
     def checkEnergy(self):
@@ -303,6 +304,7 @@ def chooseFishingLocation():
         #returns false if requirements not met, or sets location attribute if requirements met.
 
         clearScreen()
+        hm.chooseLocationHeader()
         hm.fishingLocationsMenu()
 
         selection = input("""
@@ -322,6 +324,9 @@ def chooseFishingLocation():
         
         elif selection == 2:
             if player.level < 1:
+                clearScreen()
+                hm.chooseLocationHeader()
+
                 input("""
     You must be Level 1 to fish in the pond. Press Enter""")
                 return False
@@ -330,6 +335,9 @@ def chooseFishingLocation():
         
         elif selection == 3:
             if player.level < 4:
+                clearScreen()
+                hm.chooseLocationHeader()
+
                 input("""
     You must be level 4 to fish in the small lake. Press Enter""")
                 return False
@@ -338,6 +346,9 @@ def chooseFishingLocation():
         
         elif selection == 4:
             if player.level < 6:
+                clearScreen()
+                hm.chooseLocationHeader()
+
                 input("""
     You must be level 6 to fish in the small lake. Press Enter""")
                 return False
@@ -346,6 +357,9 @@ def chooseFishingLocation():
         
         elif selection == 5:
             if player.level < 8:
+                clearScreen()
+                hm.chooseLocationHeader()
+
                 input("You must be level 4 to fish in the small lake. Press Enter")
                 return False
             player.location = "CREEK"
@@ -353,6 +367,9 @@ def chooseFishingLocation():
         
         elif selection == 6:
             if player.level < 10:
+                clearScreen()
+                hm.chooseLocationHeader()
+
                 input("You must be level 4 to fish in the small lake. Press Enter")
                 return False
             player.location = "RIVER"
@@ -360,7 +377,10 @@ def chooseFishingLocation():
         
         else:
             clearScreen()
-            input(f"""    You entered "{selection}", which is not a valid location number.
+            hm.chooseLocationHeader()
+
+            input(f"""
+    You entered "{selection}", which is not a valid location number.
             
     Press enter  """)
 
@@ -381,6 +401,7 @@ def tempGoFishing():
 def main():
 
     clearScreen()
+    hm.mainHeader()
     hm.mainMenu(player)
 
     q = input("""
