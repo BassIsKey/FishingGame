@@ -6,15 +6,16 @@ import os
 
 class Fish:
     
-    def __init__(self, name, sizeMin, sizeMax, rarity, valueMin, valueMax):
+    def __init__(self, name, sizeMin, sizeMax, rarity, valueMin, valueMax, locations):
         self.name = name
         self.sizeMin = sizeMin
         self.sizeMax = sizeMax
         self.rarity = rarity
         self.valueMin = valueMin
         self.valueMax = valueMax
-        self.size = 0
-        self.value = 0
+        self.locations = locations
+        self.size = None
+        self.value = None
     
     
     fishes = {"LMB": {"NAME": "Largemouth Bass",
@@ -39,35 +40,42 @@ class Fish:
                       "RARITY": "common",
                       "VALUEMIN": 1,
                       "VALUEMAX": 18,
-                      "LOCATIONS": [""]},
+                      "LOCATIONS": ["RAIN BARREL", "POND"]},
 
               "CRF": {"NAME": "Crayfish",
                       "SIZEMIN": .1,
                       "SIZEMAX": 1.0,
                       "RARITY": "common",
                       "VALUEMIN": 1,
-                      "VALUEMAX": 7}}
+                      "VALUEMAX": 7,
+                      "LOCATIONS": ["CREEK"]}}
 
 
     def createFishObject():
 
-        fishTypeList = []
+        while True:
+            fishTypeList = []
 
-        for x in Fish.fishes:
-            fishTypeList.append(x)
-        
-        fishCaught = random.choice(fishTypeList)
-        fish = Fish(Fish.fishes[fishCaught]["NAME"],
-                    Fish.fishes[fishCaught]["SIZEMIN"],
-                    Fish.fishes[fishCaught]["SIZEMAX"],
-                    Fish.fishes[fishCaught]["RARITY"],
-                    Fish.fishes[fishCaught]["VALUEMIN"],
-                    Fish.fishes[fishCaught]["VALUEMAX"],)
-        
-        fish.calculateFishSize()
-        fish.calculateFishValue()
+            for x in Fish.fishes:
+                fishTypeList.append(x)
+            
+            fishCaught = random.choice(fishTypeList)
+            print(location.name)
+            input(f"trying {fishCaught}. press enter")
+            fish = Fish(Fish.fishes[fishCaught]["NAME"],
+                        Fish.fishes[fishCaught]["SIZEMIN"],
+                        Fish.fishes[fishCaught]["SIZEMAX"],
+                        Fish.fishes[fishCaught]["RARITY"],
+                        Fish.fishes[fishCaught]["VALUEMIN"],
+                        Fish.fishes[fishCaught]["VALUEMAX"],
+                        Fish.fishes[fishCaught]["LOCATIONS"])
+            
+            if location.name.upper() in fish.locations:
 
-        return fish    
+                fish.calculateFishSize()
+                fish.calculateFishValue()
+
+                return fish
 
 
     # Takes the min and max size for the type of fish being caught and creates a list of random
@@ -215,8 +223,8 @@ class Location:
     
     def __init__(self):
 
-        self.name = None
-        self.sizeModifier = None
+        self.name = "Undecided"
+        self.sizeModifier = "Unknown"
 
     locations = {"RAIN BARREL": {"NAME": "Rain Barrel",
                                  "SIZE MODIFIER": .2},
@@ -235,11 +243,12 @@ class Location:
 
                  "CREEK": {"NAME": "Creek",
                            "SIZE MODIFIER": .5}}
-    
+
+
     def updateLocation(self, newLocation):
 
-        location.name = newLocation["NAME"]
-        location.sizeModifier = newLocation["SIZE MODIFIER"]
+        location.name = Location.locations[newLocation]["NAME"]
+        location.sizeModifier = Location.locations[newLocation]["SIZE MODIFIER"]
 
 
 def clearScreen():
@@ -319,7 +328,7 @@ def chooseFishingLocation():
             pass
 
         if selection == 1:
-            player.location = "RAIN BARREL"
+            location.updateLocation("RAIN BARREL")
             return True
         
         elif selection == 2:
@@ -330,7 +339,7 @@ def chooseFishingLocation():
                 input("""
     You must be Level 1 to fish in the pond. Press Enter""")
                 return False
-            player.location = "POND"
+            location.name = "POND"
             return True
         
         elif selection == 3:
@@ -424,5 +433,5 @@ location = Location()
 
 
 while True:
-
+    
     main()
