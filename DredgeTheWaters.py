@@ -85,9 +85,11 @@ class Fish:
     def calculateFishSize(self):
         
         sizeList = []
+
+        modifiedSizeMax = ((self.sizeMax - self.sizeMin) * location.sizeModifier) + self.sizeMin
         
-        smallLimit = (self.sizeMax - self.sizeMin) * 1/3
-        mediumLimit = float((self.sizeMax - self.sizeMin) * 2/3)
+        smallLimit = (modifiedSizeMax - self.sizeMin) * 1/3
+        mediumLimit = float((modifiedSizeMax - self.sizeMin) * 2/3)
 
         for smallSize in range(20):
             smallSize = float(random.uniform(0, smallLimit))
