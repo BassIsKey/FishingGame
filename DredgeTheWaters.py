@@ -121,6 +121,9 @@ class Fish:
 
         self.value = int(m * self.size + b)
 
+        if self.value < 1:
+            self.value = 1
+
         return
     
 
