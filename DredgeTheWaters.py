@@ -22,15 +22,15 @@ class Fish:
                       "SIZEMIN": .3,
                       "SIZEMAX": 22.3,
                       "RARITY": "common",
-                      "VALUEMIN": 2,
+                      "VALUEMIN": 6,
                       "VALUEMAX": 65,
                       "LOCATIONS": ["SMALL LAKE", "LARGE LAKE", "RIVER"]},
 
               "SMB": {"NAME": "Smallmouth Bass",
-                      "SIZEMIN": .2,
+                      "SIZEMIN": .3,
                       "SIZEMAX": 11.6,
                       "RARITY": "common",
-                      "VALUEMIN": 1,
+                      "VALUEMIN": 6,
                       "VALUEMAX": 43,
                       "LOCATIONS": ["SMALL LAKE", "CREEK",]},
 
@@ -38,7 +38,7 @@ class Fish:
                       "SIZEMIN": .1,
                       "SIZEMAX": 4.7,
                       "RARITY": "common",
-                      "VALUEMIN": 1,
+                      "VALUEMIN": 3,
                       "VALUEMAX": 18,
                       "LOCATIONS": ["RAIN BARREL", "POND"]},
 
@@ -48,7 +48,15 @@ class Fish:
                       "RARITY": "common",
                       "VALUEMIN": 1,
                       "VALUEMAX": 7,
-                      "LOCATIONS": ["CREEK"]}}
+                      "LOCATIONS": ["CREEK"]},
+            
+              "RKB": {"NAME": "Rock Bass",
+                      "SIZEMIN": .3,
+                      "SIZEMAX": 3.6,
+                      "RARITY": "common",
+                      "VALUEMIN": 5,
+                      "VALUEMAX": 34,
+                      "LOCATIONS": ["CREEK", "RAIN BARREL", "SMALL LAKE"]}}
 
 
     def createFishObject():
@@ -60,8 +68,6 @@ class Fish:
                 fishTypeList.append(x)
             
             fishCaught = random.choice(fishTypeList)
-            print(location.name)
-            input(f"trying {fishCaught}. press enter")
             fish = Fish(Fish.fishes[fishCaught]["NAME"],
                         Fish.fishes[fishCaught]["SIZEMIN"],
                         Fish.fishes[fishCaught]["SIZEMAX"],
@@ -107,11 +113,6 @@ class Fish:
 
         return
 
-
-    # Calculates the value of the fish caught. The larger the size, the higher the value, up to the max
-    # which is unique for each fish type. The percentage of the total value range will be equal to the
-    # percentage of the fish size. Catching a 7 lb. fish that has a range 2 to 12 lbs. (10 lb range),
-    # is 50% of the size range, and will receive 50% of the value range.
 
     def calculateFishValue(self):
         y = self.valueMax
@@ -190,6 +191,9 @@ class Player:
     def checkEnergy(self):
 
         if self.energy < self.energyToFish:
+
+            input("""    Not enough energy to fish any more today. Press Enter""")
+            
             return False
         
         return True
@@ -263,13 +267,11 @@ def clearScreen():
 def fishOrJunk():
 
     if not player.checkEnergy():
-        
-        input("""   Not enough energy to fish any more today.
-    Press Enter""")
-        
+                
         return
     
     if not chooseFishingLocation():
+        
         return
     
     fg.bobberGraphic()
@@ -293,6 +295,12 @@ def inventoryMakeRoom():
 
     print("    Choose the number of the inventory item to throw back")
     selection = input(    "Option #:  ")
+
+
+def onTheWater():
+    clearScreen()
+    hm.onTheWaterHeader()
+    hm.PlayerInfoHeaderWhileFishing(player, location)
 
 
 
@@ -337,13 +345,14 @@ def chooseFishingLocation():
             return True
         
         elif selection == 2:
-            if player.level < 1:
+            if player.level < 2:
                 clearScreen()
                 hm.chooseLocationHeader()
 
                 input("""
     You must be Level 1 to fish in the pond. Press Enter""")
                 return False
+            
             location.name = "POND"
             return True
         
@@ -355,6 +364,7 @@ def chooseFishingLocation():
                 input("""
     You must be level 4 to fish in the small lake. Press Enter""")
                 return False
+            
             player.location = "SMALL LAKE"
             return True
         
@@ -366,6 +376,7 @@ def chooseFishingLocation():
                 input("""
     You must be level 6 to fish in the small lake. Press Enter""")
                 return False
+            
             player.location = "LARGE LAKE"
             return True
         
@@ -374,8 +385,10 @@ def chooseFishingLocation():
                 clearScreen()
                 hm.chooseLocationHeader()
 
-                input("You must be level 4 to fish in the small lake. Press Enter")
+                input("""
+    You must be level 4 to fish in the small lake. Press Enter""")
                 return False
+            
             player.location = "CREEK"
             return True
         
@@ -386,6 +399,7 @@ def chooseFishingLocation():
 
                 input("You must be level 4 to fish in the small lake. Press Enter")
                 return False
+            
             player.location = "RIVER"
             return True
         
@@ -394,9 +408,7 @@ def chooseFishingLocation():
             hm.chooseLocationHeader()
 
             input(f"""
-    You entered "{selection}", which is not a valid location number.
-            
-    Press enter  """)
+    Please select a location number from the list. Press enter  """)
 
 
 def tempGoFishing():
