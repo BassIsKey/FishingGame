@@ -131,3 +131,11 @@ def fishingLocationsMenu():
     5. Creek                             6. River)
     
     "X" to return.""")
+
+
+def activeFishingMenu():
+    print("""
+    1. Cast your line                    2. Apply bait
+    3. Check inventory
+    
+    "X" to return.""")

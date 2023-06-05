@@ -68,6 +68,7 @@ class Fish:
                 fishTypeList.append(x)
             
             fishCaught = random.choice(fishTypeList)
+            input(f"""trying {fishCaught}.""")
             fish = Fish(Fish.fishes[fishCaught]["NAME"],
                         Fish.fishes[fishCaught]["SIZEMIN"],
                         Fish.fishes[fishCaught]["SIZEMAX"],
@@ -422,6 +423,26 @@ def tempGoFishing():
     
     #where to fish
     chooseFishingLocation()
+
+
+def activelyFishing():
+
+    clearScreen()
+    hm.PlayerInfoHeaderWhileFishing()
+    hm.activeFishingMenu()
+
+    q = input("""
+    Option #: """)
+
+    if q == "1":
+        fishOrJunk()
+        
+    elif q == "2":
+        pass
+    elif q == "3":
+        pass
+    elif q == "4":
+        pass
 
 
 def main():
