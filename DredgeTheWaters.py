@@ -266,14 +266,17 @@ def clearScreen():
 
 
 def fishOrJunk():
-
-    if not player.checkEnergy():
-                
-        return
     
-    if not chooseFishingLocation():
-        
+    if False in (player.checkEnergy(), chooseFishingLocation()):
         return
+
+    # if not player.checkEnergy():
+                
+    #     return
+    
+    # if not chooseFishingLocation():
+        
+    #     return
     
     fg.bobberGraphic()
 
@@ -428,7 +431,7 @@ def tempGoFishing():
 def activelyFishing():
 
     clearScreen()
-    hm.PlayerInfoHeaderWhileFishing()
+    hm.PlayerInfoHeaderWhileFishing(player, location)
     hm.activeFishingMenu()
 
     q = input("""
@@ -455,7 +458,7 @@ def main():
     Option #: """)
 
     if q == "1":
-        fishOrJunk()
+        activelyFishing()
         
     elif q == "2":
         pass
@@ -473,3 +476,4 @@ location = Location()
 while True:
     
     main()
+    # activelyFishing()
