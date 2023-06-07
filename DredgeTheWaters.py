@@ -267,22 +267,20 @@ def clearScreen():
 
 def fishOrJunk():
     
-    if False in (player.checkEnergy(), chooseFishingLocation()):
+    # if False in (player.checkEnergy(), chooseFishingLocation()):
+    #     return
+
+    if not player.checkEnergy():
+        return
+    
+    if not chooseFishingLocation():
         return
 
-    # if not player.checkEnergy():
-                
-    #     return
-    
-    # if not chooseFishingLocation():
-        
-    #     return
-    
     fg.bobberGraphic()
 
     x = random.random()
     if x <= .1:
-        print("You caught an item or junk.")
+        input("""You caught junk.""")
         return
     
     catchFish()
@@ -304,7 +302,7 @@ def inventoryMakeRoom():
 def onTheWater():
     clearScreen()
     hm.onTheWaterHeader()
-    hm.PlayerInfoHeaderWhileFishing(player, location)
+    hm.playerInfoHeaderWhileFishing(player, location)
 
 
 
@@ -312,14 +310,21 @@ def onTheWater():
 def catchFish():
     fish = Fish.createFishObject()
 
-    input(f"""{fish.catchDescription()}
+    input(f"""
+    {fish.catchDescription()}
     
     Press Enter""")
 
     if not player.fullInventoryWarning():
-        print("You don't have inventory space.")
+        input("""
+    You don't have inventory space.
+    
+    Press Enter  """)
+        
         pass
+
     player.inventory.append(fish)
+
     return
 
 
@@ -334,85 +339,89 @@ def chooseFishingLocation():
         hm.fishingLocationsMenu()
 
         selection = input("""
-    Option:  """)
+    Option #:  """)
 
         try:
             selection = int(selection)
         
         except:
             if selection == "x" or selection == "X":
-                return main()
+                return False
             pass
 
         if selection == 1:
             location.updateLocation("RAIN BARREL")
             return True
-        
+
+
         elif selection == 2:
-            if player.level < 2:
+            if player.level >= 2:
                 clearScreen()
                 hm.chooseLocationHeader()
 
-                input("""
-    You must be Level 1 to fish in the pond. Press Enter""")
-                return False
-            
-            location.name = "POND"
-            return True
-        
+                location.updateLocation("POND")
+                return True
+
+            print("""
+    You must be at least level 2 to fish in the pond.""")
+
+
         elif selection == 3:
-            if player.level < 4:
+            if player.level >= 4:
                 clearScreen()
                 hm.chooseLocationHeader()
 
-                input("""
-    You must be level 4 to fish in the small lake. Press Enter""")
-                return False
+                location.updateLocation("SMALL LAKE")
+                return True
             
-            player.location = "SMALL LAKE"
-            return True
+            input("""
+    You must be at least level 4 to fish in the small lake.""")
+            
         
         elif selection == 4:
-            if player.level < 6:
+            if player.level >= 6:
                 clearScreen()
                 hm.chooseLocationHeader()
 
-                input("""
-    You must be level 6 to fish in the small lake. Press Enter""")
-                return False
+                location.updateLocation("LARGE LAKE")
+                return True
             
-            player.location = "LARGE LAKE"
-            return True
+            input("""
+    You must be at least level 6 to fish in the small lake.""")
+            
         
         elif selection == 5:
-            if player.level < 8:
+            if player.level >= 8:
                 clearScreen()
                 hm.chooseLocationHeader()
 
-                input("""
-    You must be level 4 to fish in the small lake. Press Enter""")
-                return False
+                location.updateLocation("CREEK")
+                return True
             
-            player.location = "CREEK"
-            return True
+            input("""
+    You must be at least level 8 to fish in the small lake.""")
+        
         
         elif selection == 6:
-            if player.level < 10:
+            if player.level >= 10:
                 clearScreen()
                 hm.chooseLocationHeader()
 
-                input("You must be level 4 to fish in the small lake. Press Enter")
+                location.updateLocation("RIVER")
                 return False
+
+            input("""
+    You must be at least level 4 to fish in the small lake.""")
             
-            player.location = "RIVER"
-            return True
         
         else:
-            clearScreen()
-            hm.chooseLocationHeader()
+            # clearScreen()
+            # hm.chooseLocationHeader()
 
             input(f"""
-    Please select a location number from the list. Press enter  """)
+    Select a location number available to you from the list.
+    
+    Press enter  """)
 
 
 def tempGoFishing():
@@ -425,13 +434,17 @@ def tempGoFishing():
     player.fullInventoryWarning()
     
     #where to fish
-    chooseFishingLocation()
+    if not chooseFishingLocation():
+        return
+
+    #fishing menu
+    fishOrJunk()
 
 
 def activelyFishing():
 
     clearScreen()
-    hm.PlayerInfoHeaderWhileFishing(player, location)
+    hm.playerInfoHeaderWhileFishing(player, location)
     hm.activeFishingMenu()
 
     q = input("""
@@ -458,7 +471,8 @@ def main():
     Option #: """)
 
     if q == "1":
-        activelyFishing()
+        # activelyFishing()
+        tempGoFishing()
         
     elif q == "2":
         pass
