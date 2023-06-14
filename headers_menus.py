@@ -114,7 +114,7 @@ def basicPlayerInfoHeader(player):
 ***********************************************************************************""")
 
 
-def PlayerInfoHeaderWhileFishing(player, location):
+def playerInfoHeaderWhileFishing(player, location):
     print(f"""
     Name: {player.name}                  Level: {player.level}
     Location: {location.name}            Size modifier: {location.sizeModifier}

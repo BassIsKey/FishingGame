@@ -68,7 +68,6 @@ class Fish:
                 fishTypeList.append(x)
             
             fishCaught = random.choice(fishTypeList)
-            input(f"""trying {fishCaught}.""")
             fish = Fish(Fish.fishes[fishCaught]["NAME"],
                         Fish.fishes[fishCaught]["SIZEMIN"],
                         Fish.fishes[fishCaught]["SIZEMAX"],
@@ -194,10 +193,6 @@ class Player:
         if self.energy < self.energyToFish:
 
             input("""    Not enough energy to fish any more today. Press Enter""")
-            
-            return False
-        
-        return True
         
 
     def fullInventoryWarning(self):
@@ -206,9 +201,12 @@ class Player:
             clearScreen()
             input("""
     Your inventory is full. You will need to release your next catch
-    or make room in your inventory after your next catch.
+    or make room in your inventory in order to keep your next catch.
     
     Press enter.  """)
+            return False
+        
+        return True
 
     def payEnergyCost(self):
         self.energy -= self.energyToFish
@@ -266,17 +264,9 @@ def clearScreen():
 
 
 def fishOrJunk():
-    
-    # if False in (player.checkEnergy(), chooseFishingLocation()):
-    #     return
-
-    if not player.checkEnergy():
-        return
-    
-    if not chooseFishingLocation():
-        return
 
     fg.bobberGraphic()
+    clearScreen()
 
     x = random.random()
     if x <= .1:
@@ -315,15 +305,8 @@ def catchFish():
     
     Press Enter""")
 
-    if not player.fullInventoryWarning():
-        input("""
-    You don't have inventory space.
-    
-    Press Enter  """)
-        
-        pass
-
     player.inventory.append(fish)
+    player.payEnergyCost()
 
     return
 
@@ -362,6 +345,7 @@ def chooseFishingLocation():
                 location.updateLocation("POND")
                 return True
 
+            clearScreen()
             print("""
     You must be at least level 2 to fish in the pond.""")
 
@@ -374,6 +358,7 @@ def chooseFishingLocation():
                 location.updateLocation("SMALL LAKE")
                 return True
             
+            clearScreen()
             input("""
     You must be at least level 4 to fish in the small lake.""")
             
@@ -386,6 +371,7 @@ def chooseFishingLocation():
                 location.updateLocation("LARGE LAKE")
                 return True
             
+            clearScreen()
             input("""
     You must be at least level 6 to fish in the small lake.""")
             
@@ -398,6 +384,7 @@ def chooseFishingLocation():
                 location.updateLocation("CREEK")
                 return True
             
+            clearScreen()
             input("""
     You must be at least level 8 to fish in the small lake.""")
         
@@ -410,6 +397,7 @@ def chooseFishingLocation():
                 location.updateLocation("RIVER")
                 return False
 
+            clearScreen()
             input("""
     You must be at least level 4 to fish in the small lake.""")
             
