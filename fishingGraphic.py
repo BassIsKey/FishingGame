@@ -1,11 +1,14 @@
-from os import system as sys
-from time import sleep 
+from time import sleep
+import os
 
 # https://www.youtube.com/watch?v=v_raWlX7tZY
 
+def clearScreen():
+    os.system('cls' if os.name == 'nt' else 'clear')
+
 def cast():
 
-  sys('cls')
+  clearScreen()
 
   waitsecX = .1
 
@@ -21,7 +24,7 @@ def cast():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
 
@@ -36,7 +39,7 @@ def cast():
 
 def bobberGraphic():
 
-  sys('cls')
+  clearScreen()
 
   waitsecX = .1
 
@@ -64,7 +67,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   |||||||||||||||||||| \B:%888#:#/ ||||||||||||||||
@@ -90,7 +93,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   |||||||||||||||||||| N$.S8B##.%N ||||||||||||||||
@@ -116,7 +119,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   ||||||||/|||||||||/|! /o TJT o\ !|||||/||||||||||
@@ -142,7 +145,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   |||||||//||||||||//||||||.!.|||||||||//||||||||||
@@ -168,7 +171,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   ||||||||||||||||||||||||| | |||||||||||||||||||||
@@ -194,7 +197,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   ||||||||||||||||||||||||| | |||||||||||||||||||||
@@ -220,7 +223,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   ||||||||/|||||||||/|||||| | ||||||||||/||||||||||
@@ -246,7 +249,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   |||||||//||||||||//||||||.!.|||||||||//||||||||||
@@ -272,7 +275,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   ||||||||||||||||||||||||| | |||||||||||||||||||||
@@ -298,7 +301,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   ||||||||||||||||||||||||| | |||||||||||||||||||||
@@ -324,7 +327,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   ||||||||/|||||||||/|||||| | ||||||||||/||||||||||
@@ -350,7 +353,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   |||||||//||||||||//||||||.!.|||||||||//||||||||||
@@ -376,7 +379,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   ||||||||||||||||||||||||| | |||||||||||||||||||||
@@ -402,7 +405,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   ||||||||||||||||||||||||| | |||||||||||||||||||||
@@ -428,7 +431,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   ||||||||/|||||||||/|||||| | ||||||||||/||||||||||
@@ -454,7 +457,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   |||||||//||||||||//|||||| | |||||||||//||||||||||
@@ -480,7 +483,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   ||||||||||||||||||||||||| | |||||||||||||||||||||
@@ -506,7 +509,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   ||||||||||||||||||||||||| | |||||||||||||||||||||
@@ -532,7 +535,7 @@ def bobberGraphic():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   ||||||||||||||||||||||||| | |||||||||||||||||||||
@@ -643,7 +646,7 @@ _ _-_ _-_ _-_ _-_ \ǁ\\
 
 def duck():
 
-  sys('cls')
+  clearScreen()
 
   waitsecX = .15
 
@@ -655,7 +658,7 @@ def duck():
  ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
 
@@ -665,7 +668,7 @@ def duck():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
 
@@ -675,7 +678,7 @@ def duck():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   
@@ -685,7 +688,7 @@ def duck():
    ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
                       ,QUACK   
@@ -695,7 +698,7 @@ def duck():
  ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
                         ,Q U A C K
@@ -705,7 +708,7 @@ def duck():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
                          Q U A C K
@@ -715,7 +718,7 @@ def duck():
  ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
 
@@ -725,7 +728,7 @@ def duck():
  ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
 
@@ -738,7 +741,7 @@ def duck():
 
 def waveTest():
 
-  sys('cls')
+  clearScreen()
 
   waitsecX = .1
 
@@ -747,77 +750,77 @@ def waveTest():
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   - " -   .
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   -" -  .
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   -^-  .
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
    .^.
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
    -"-
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
    -"-
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
    -'~ -
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
     -'~ -  .
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
    - '~ -  .
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   .- '~ -  .
   ''')
 
   sleep(waitsecX)
-  sys('cls')
+  clearScreen()
 
   print('''
   - '~ - .   .

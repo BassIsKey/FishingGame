@@ -15,8 +15,7 @@ class Fish:
         self.valueMax = valueMax
         self.locations = locations
         self.size = None
-        self.value = None
-    
+        self.value = None    
     
     fishes = {"LMB": {"NAME": "Largemouth Bass",
                       "SIZEMIN": .3,
@@ -97,15 +96,15 @@ class Fish:
         smallLimit = (modifiedSizeMax - self.sizeMin) * 1/3
         mediumLimit = float((modifiedSizeMax - self.sizeMin) * 2/3)
 
-        for smallSize in range(20):
+        for smallSize in range(3):
             smallSize = float(random.uniform(0, smallLimit))
             sizeList.append(round(self.sizeMin + smallSize, 1))
         
-        for mediumSize in range(20):
+        for mediumSize in range(3):
             mediumSize = float(random.uniform(smallLimit, mediumLimit))
             sizeList.append(round(self.sizeMin + mediumSize, 1))
         
-        for largeSize in range(2):
+        for largeSize in range(1):
             largeSize = float(random.uniform(mediumLimit, self.sizeMax))
             sizeList.append(round((self.sizeMin + largeSize), 1))
         
@@ -151,8 +150,8 @@ class Player:
         self.maxInventory = 4
         self.catchingPower = 1
         self.quarters = "Campsite"
-        self.energy = 10
-        self.energyToFish = 5
+        self.energy = 30
+        self.energyToFish = 4
         self.location = "BARREL"
 
     
@@ -193,20 +192,21 @@ class Player:
         if self.energy < self.energyToFish:
 
             input("""    Not enough energy to fish any more today. Press Enter""")
+            return False
+        
+        return True
         
 
     def fullInventoryWarning(self):
 
         if len(self.inventory) >= self.maxInventory:
+
             clearScreen()
             input("""
     Your inventory is full. You will need to release your next catch
     or make room in your inventory in order to keep your next catch.
     
     Press enter.  """)
-            return False
-        
-        return True
 
     def payEnergyCost(self):
         self.energy -= self.energyToFish
@@ -278,15 +278,42 @@ def fishOrJunk():
     return
 
 
-def inventoryMakeRoom():
+def inventoryMakeRoom(player, fish):
 
-    Fish.catchDescription()
-    hm.inventoryHeader()
+    while len(player.inventory) >= player.maxInventory:
+        
+        clearScreen()
+        hm.makeRoomHeader()
 
-    player.printInventory()
+        print(f"""    What do you want to throw back to
+        make room for {fish.catchDescription()}? """)
 
-    print("    Choose the number of the inventory item to throw back")
-    selection = input(    "Option #:  ")
+        player.printInventory()
+
+        print("")
+        selection = input("""    Choose the number of the inventory item to throw back
+
+Option #:  """)
+
+        try:
+            y = int(selection) - 1
+            removed = player.inventory.pop(y)
+            
+            clearScreen()
+            hm.makeRoomHeader()
+
+            input(f"""You throw back {removed}.
+            
+        Press Enter  """)
+
+        except:
+            input("""Select an inventory number from the list.
+                
+                Press Enter  """)
+        
+    return
+
+
 
 
 def onTheWater():
@@ -305,6 +332,8 @@ def catchFish():
     
     Press Enter""")
 
+    inventoryMakeRoom(player, fish)
+    
     player.inventory.append(fish)
     player.payEnergyCost()
 
