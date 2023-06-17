@@ -302,7 +302,7 @@ Option #:  """)
             clearScreen()
             hm.makeRoomHeader()
 
-            input(f"""You throw back {removed}.
+            input(f"""You throw back {removed.name}.
             
         Press Enter  """)
 
@@ -375,8 +375,10 @@ def chooseFishingLocation():
                 return True
 
             clearScreen()
-            print("""
-    You must be at least level 2 to fish in the pond.""")
+            input("""
+    You must be at least level 2 to fish in the pond.
+    
+    PRESS ENTER""")
 
 
         elif selection == 3:
@@ -389,7 +391,9 @@ def chooseFishingLocation():
             
             clearScreen()
             input("""
-    You must be at least level 4 to fish in the small lake.""")
+    You must be at least level 4 to fish in the small lake.
+    
+    PRESS ENTER""")
             
         
         elif selection == 4:
@@ -402,7 +406,9 @@ def chooseFishingLocation():
             
             clearScreen()
             input("""
-    You must be at least level 6 to fish in the small lake.""")
+    You must be at least level 6 to fish in the large lake.
+    
+    PRESS ENTER""")
             
         
         elif selection == 5:
@@ -415,7 +421,9 @@ def chooseFishingLocation():
             
             clearScreen()
             input("""
-    You must be at least level 8 to fish in the small lake.""")
+    You must be at least level 8 to fish in the creek.
+    
+    PRESS ENTER""")
         
         
         elif selection == 6:
@@ -428,7 +436,9 @@ def chooseFishingLocation():
 
             clearScreen()
             input("""
-    You must be at least level 4 to fish in the small lake.""")
+    You must be at least level 4 to fish in the river.
+    
+    PRESS ENTER""")
             
         
         else:
