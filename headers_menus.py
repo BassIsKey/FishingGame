@@ -37,12 +37,12 @@ def inventoryHeader():
 ***********************************************************************************""")
 
 
-def fishingHeader():
-    print("""
+def fishingHeader(player, location):
+    print(f"""
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                      *             Fishing               *
                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+    Location: {location.name}     Inventory: {len(player.inventory)}/{player.maxInventory}     Energy: {player.energy}/100
 ***********************************************************************************""")
 
 
@@ -109,6 +109,15 @@ def chooseLocationHeader():
 ***********************************************************************************""")
 
 
+def attentionHeader():
+    print("""
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                     *             Attention             *
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+***********************************************************************************""")
+
+
 def mainMenu(player):
     print(f"""
     1. Go fishing!                       2. Bait Bucket
@@ -124,10 +133,7 @@ def basicPlayerInfoHeader(player):
 
 
 def playerInfoHeaderWhileFishing(player, location):
-    print(f"""
-    Name: {player.name}                  Level: {player.level}
-    Location: {location.name}            Size modifier: {location.sizeModifier}
-
+    print(f"""          Location: {location.name}            Inventory Space: {len(player.inventory)}/{player.maxInventory}
 ***********************************************************************************""")
 
 

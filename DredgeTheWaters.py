@@ -128,6 +128,7 @@ class Fish:
     
 
     def addFishInventory(self):
+
         self.append(player.inventory)
 
         return
@@ -135,9 +136,9 @@ class Fish:
 
     def catchDescription(self):
 
-        clearScreen()
+        # clearScreen()
 
-        return f"You caught a {self.size} pound {self.name} worth {self.value}!"
+        return f"{self.size} pound {self.name} worth {self.value}"
 
 
 class Player:
@@ -159,12 +160,31 @@ class Player:
         
         print(f"{newThing.name} added to your inventory")
         self.inventory.append(newThing)
+
+
+    def removeFromInventory():
+
+        while True:
+            clearScreen()
+            hm.makeRoomHeader()
+            player.printInventory()
+
+            selection = input("""    
+    Choose an inventory item number to toss back.
+
+    Option #:  """)
+            
+            try:
+                selection = int(selection) - 1
+                player.inventory.pop(selection)
+            
+            except:
+                if selection == "x" or selection == "X":
+                    return
+                pass
     
 
     def printInventory(self):
-
-        clearScreen()
-        hm.inventoryHeader()
 
         if len(player.inventory) < 1:
             input("""
@@ -182,9 +202,6 @@ class Player:
                 for i in player.inventory:
                     print(f"""    {y}. {i.name} ({i.rarity})  Value: {i.value}""")
             y += 1
-
-        input("""
-    PRESS ENTER""")
     
 
     def checkEnergy(self):
@@ -202,9 +219,10 @@ class Player:
         if len(self.inventory) >= self.maxInventory:
 
             clearScreen()
+            hm.attentionHeader()
             input("""
-    Your inventory is full. You will need to release your next catch
-    or make room in your inventory in order to keep your next catch.
+        Your inventory is full. You will need to release your next catch
+        or make room in your inventory in order to keep your next catch.
     
     Press enter.  """)
 
@@ -273,7 +291,8 @@ def fishOrJunk():
         input("""You caught junk.""")
         return
     
-    catchFish()
+    if x >.1:
+        catchFish()
 
     return
 
@@ -285,35 +304,39 @@ def inventoryMakeRoom(player, fish):
         clearScreen()
         hm.makeRoomHeader()
 
-        print(f"""    What do you want to throw back to
-        make room for {fish.catchDescription()}? """)
+        print(f"""
+    You caught a {fish.catchDescription()}...
+    but your inventory is full.
 
+    Input "x" to toss your new catch back or choose
+    a number from the inventory list to throw back.""")
+    
         player.printInventory()
 
-        print("")
-        selection = input("""    Choose the number of the inventory item to throw back
-
-Option #:  """)
+        selection = input("""
+    Option #:  """)
 
         try:
-            y = int(selection) - 1
-            removed = player.inventory.pop(y)
+            selection = int(selection) - 1
+            removed = player.inventory.pop(selection)
             
             clearScreen()
             hm.makeRoomHeader()
 
-            input(f"""You throw back {removed.name}.
+            input(f"""
+    You throw back {removed.name} to make room for {fish.name}.
             
         Press Enter  """)
 
         except:
+
+            if selection == "x" or selection == "X":
+                return
             input("""Select an inventory number from the list.
                 
                 Press Enter  """)
         
     return
-
-
 
 
 def onTheWater():
@@ -322,13 +345,11 @@ def onTheWater():
     hm.playerInfoHeaderWhileFishing(player, location)
 
 
-
-
 def catchFish():
     fish = Fish.createFishObject()
-
+    
     input(f"""
-    {fish.catchDescription()}
+    You caught a {fish.catchDescription()}!
     
     Press Enter""")
 
@@ -464,28 +485,71 @@ def tempGoFishing():
     if not chooseFishingLocation():
         return
 
-    #fishing menu
-    fishOrJunk()
+    #proceed to fishing options
+    activelyFishing()
+
+    return
 
 
 def activelyFishing():
 
-    clearScreen()
-    hm.playerInfoHeaderWhileFishing(player, location)
-    hm.activeFishingMenu()
+    while True:
 
-    q = input("""
-    Option #: """)
+        clearScreen()
+        hm.fishingHeader(player, location)
+        hm.activeFishingMenu()
 
-    if q == "1":
-        fishOrJunk()
+        selection = input("""
+        Option #: """)
+
+        try:
+            selection = int(selection)
         
-    elif q == "2":
-        pass
-    elif q == "3":
-        pass
-    elif q == "4":
-        pass
+        except:
+            if selection == "x" or selection == "X":
+                return False
+            pass
+
+        if selection == 1:
+            fishOrJunk()
+
+
+        elif selection == 2:
+            if player.level >= 2:
+                clearScreen()
+                hm.chooseLocationHeader()
+
+                location.updateLocation("POND")
+                return True
+        
+
+        elif selection == "3":
+            clearScreen()
+            hm.inventoryHeader()
+            player.printInventory()
+
+            input("""
+        Press Enter  """)
+        
+
+        else:
+            # clearScreen()
+            # hm.chooseLocationHeader()
+
+            input(f"""
+    Select a location number available to you from the list.
+    
+    Press enter  """)
+
+    # if q == "1":
+    #     fishOrJunk()
+        
+    # elif q == "2":
+    #     pass
+    # elif q == "3":
+    #     pass
+    # elif q == "4":
+    #     pass
 
 
 def main():
@@ -508,13 +572,36 @@ def main():
     elif q == "4":
         pass
     elif q == "5":
+        clearScreen()
+        hm.inventoryHeader()
         player.printInventory()
+
+        input("""
+    Press Enter  """)
 
 player = Player()
 location = Location()
 
+#these are testing opjects
+fish1 = Fish("testfish1", 50, 100, "testcommon", 300, 600, ["RAIN BARREL"])
+fish1.value = 300
+fish1.size = 100
+fish2 = Fish("testfish2", 50, 100, "testcommon", 300, 600, ["RAIN BARREL"])
+fish2.value = 300
+fish2.size = 100
+fish3 = Fish("testfish3", 50, 100, "testcommon", 300, 600, ["RAIN BARREL"])
+fish3.value = 300
+fish3.size = 100
+fish4 = Fish("testfish4", 50, 100, "testcommon", 300, 600, ["RAIN BARREL"])
+fish4.value = 300
+fish4.size = 100
+player.inventory.append(fish1)
+player.inventory.append(fish2)
+player.inventory.append(fish3)
+player.inventory.append(fish4)
 
 while True:
     
     main()
-    # activelyFishing()
+    input("""
+    End of the code. Press Enter  """)
