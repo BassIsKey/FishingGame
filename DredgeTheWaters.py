@@ -15,8 +15,8 @@ class Fish:
         self.valueMax = valueMax
         self.locations = locations
         self.size = None
-        self.value = None    
-    
+        self.value = None
+
     fishes = {"LMB": {"NAME": "Largemouth Bass",
                       "SIZEMIN": .3,
                       "SIZEMAX": 22.3,
@@ -56,6 +56,54 @@ class Fish:
                       "VALUEMIN": 5,
                       "VALUEMAX": 34,
                       "LOCATIONS": ["CREEK", "RAIN BARREL", "SMALL LAKE"]}}
+
+
+    def newFish():
+        while True:
+            possibleFish = []
+            for x in Fish.fishes:
+                if player.location in Fish.fishes[x]["LOCATIONS"]:
+                    possibleFish.append(x)
+            
+            fishCaught = random.choice(possibleFish)
+            fish = Fish(Fish.fishes[fishCaught]["NAME"],
+                        Fish.fishes[fishCaught]["SIZEMIN"],
+                        Fish.fishes[fishCaught]["SIZEMAX"],
+                        Fish.fishes[fishCaught]["RARITY"],
+                        Fish.fishes[fishCaught]["VALUEMIN"],
+                        Fish.fishes[fishCaught]["VALUEMAX"],
+                        Fish.fishes[fishCaught]["LOCATIONS"])
+            
+            sizeList = []
+
+            modifiedSizeMax = ((fish.sizeMax - fish.sizeMin) * location.sizeModifier) + fish.sizeMin
+            
+            smallLimit = (modifiedSizeMax - fish.sizeMin) * 1/3
+            mediumLimit = float((modifiedSizeMax - fish.sizeMin) * 2/3)
+
+            for smallSize in range(3):
+                smallSize = float(random.uniform(0, smallLimit))
+                sizeList.append(round(fish.sizeMin + smallSize, 1))
+            
+            for mediumSize in range(3):
+                mediumSize = float(random.uniform(smallLimit, mediumLimit))
+                sizeList.append(round(fish.sizeMin + mediumSize, 1))
+            
+            for largeSize in range(1):
+                largeSize = float(random.uniform(mediumLimit, fish.sizeMax))
+                sizeList.append(round((fish.sizeMin + largeSize), 1))
+            
+            fish.size = random.choice(sizeList)
+
+            y = fish.valueMax
+            x = fish.sizeMax
+            m = round((fish.valueMax - fish.valueMin) / (fish.sizeMax - fish.sizeMin), 3)
+            b = round(y - (m * x), 3)
+
+            fish.value = int(m * fish.size + b)
+
+            if fish.value < 1:
+                fish.value = 1
 
 
     def createFishObject():
@@ -207,8 +255,14 @@ class Player:
     def checkEnergy(self):
 
         if self.energy < self.energyToFish:
+            return False
+        
+        return True
+    
 
-            input("""    Not enough energy to fish any more today. Press Enter""")
+    def checkInventory(self):
+
+        if len(self.inventory) > self.maxInventory:
             return False
         
         return True
@@ -305,11 +359,10 @@ def inventoryMakeRoom(player, fish):
         hm.makeRoomHeader()
 
         print(f"""
-    You caught a {fish.catchDescription()}...
-    but your inventory is full.
+    You caught a {fish.catchDescription()} but your inventory is full.
 
-    Input "x" to toss your new catch back or choose
-    a number from the inventory list to throw back.""")
+    Choose an item number to throw back or input "x" to release your
+    new catch.""")
     
         player.printInventory()
 
@@ -347,6 +400,10 @@ def onTheWater():
 
 def catchFish():
     fish = Fish.createFishObject()
+
+    if not player.checkInventory:
+        inventoryMakeRoom()
+        return
     
     input(f"""
     You caught a {fish.catchDescription()}!
@@ -372,7 +429,7 @@ def chooseFishingLocation():
         hm.fishingLocationsMenu()
 
         selection = input("""
-    Option #:  """)
+        Option #:  """)
 
         try:
             selection = int(selection)
@@ -396,6 +453,7 @@ def chooseFishingLocation():
                 return True
 
             clearScreen()
+            hm.chooseLocationHeader()
             input("""
     You must be at least level 2 to fish in the pond.
     
@@ -476,19 +534,19 @@ def tempGoFishing():
 
     #check energy
     if not player.checkEnergy():
+
+        input("""        Not enough energy to fish any more today.
+        
+            Press Enter""")
+        
         return
-    
-    #warn if full inventory
-    player.fullInventoryWarning()
-    
+        
     #where to fish
     if not chooseFishingLocation():
         return
 
     #proceed to fishing options
     activelyFishing()
-
-    return
 
 
 def activelyFishing():
@@ -498,6 +556,10 @@ def activelyFishing():
         clearScreen()
         hm.fishingHeader(player, location)
         hm.activeFishingMenu()
+
+        if len(player.inventory) >= player.maxInventory:
+            print("""
+        Warning. Your inventory is full""")
 
         selection = input("""
         Option #: """)
@@ -511,16 +573,12 @@ def activelyFishing():
             pass
 
         if selection == 1:
+            # player.fullInventoryWarning() Decided to remove this courtesy altogether
             fishOrJunk()
 
 
         elif selection == 2:
-            if player.level >= 2:
-                clearScreen()
-                hm.chooseLocationHeader()
-
-                location.updateLocation("POND")
-                return True
+            pass
         
 
         elif selection == "3":
@@ -598,10 +656,13 @@ fish4.size = 100
 player.inventory.append(fish1)
 player.inventory.append(fish2)
 player.inventory.append(fish3)
-player.inventory.append(fish4)
+# player.inventory.append(fish4)
 
 while True:
-    
+    # player.location = "RAIN BARREL"
+    # catchSumpn = Fish.newFish()
+    # print(catchSumpn)
+
     main()
     input("""
     End of the code. Press Enter  """)
