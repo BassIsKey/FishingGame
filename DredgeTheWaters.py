@@ -75,25 +75,35 @@ class Fish:
                         Fish.fishes[fishCaught]["LOCATIONS"])
             
             sizeList = []
+            sizeWeights = (.7, .2, .1)
 
             modifiedSizeMax = ((fish.sizeMax - fish.sizeMin) * location.sizeModifier) + fish.sizeMin
             
             smallLimit = (modifiedSizeMax - fish.sizeMin) * 1/3
             mediumLimit = float((modifiedSizeMax - fish.sizeMin) * 2/3)
 
-            for smallSize in range(3):
-                smallSize = float(random.uniform(0, smallLimit))
-                sizeList.append(round(fish.sizeMin + smallSize, 1))
+            smallSize = float(random.uniform(0, smallLimit))
+            sizeList.append(round(fish.sizeMin + smallSize, 1))
+
+            mediumSize = float(random.uniform(smallLimit, mediumLimit))
+            sizeList.append(round(fish.sizeMin + mediumSize, 1))
+
+            largeSize = float(random.uniform(mediumLimit, fish.sizeMax))
+            sizeList.append(round((fish.sizeMin + largeSize), 1))
+
+            # for smallSize in range(3):
+            #     smallSize = float(random.uniform(0, smallLimit))
+            #     sizeList.append(round(fish.sizeMin + smallSize, 1))
             
-            for mediumSize in range(3):
-                mediumSize = float(random.uniform(smallLimit, mediumLimit))
-                sizeList.append(round(fish.sizeMin + mediumSize, 1))
+            # for mediumSize in range(3):
+            #     mediumSize = float(random.uniform(smallLimit, mediumLimit))
+            #     sizeList.append(round(fish.sizeMin + mediumSize, 1))
             
-            for largeSize in range(1):
-                largeSize = float(random.uniform(mediumLimit, fish.sizeMax))
-                sizeList.append(round((fish.sizeMin + largeSize), 1))
+            # for largeSize in range(1):
+            #     largeSize = float(random.uniform(mediumLimit, fish.sizeMax))
+            #     sizeList.append(round((fish.sizeMin + largeSize), 1))
             
-            fish.size = random.choice(sizeList)
+            fish.size = random.choice(sizeList, sizeWeights, 1)
 
             y = fish.valueMax
             x = fish.sizeMax
@@ -530,7 +540,7 @@ def chooseFishingLocation():
     Press enter  """)
 
 
-def tempGoFishing():
+def goFishing():
 
     #check energy
     if not player.checkEnergy():
@@ -621,7 +631,7 @@ def main():
 
     if q == "1":
         # activelyFishing()
-        tempGoFishing()
+        goFishing()
         
     elif q == "2":
         pass
@@ -636,6 +646,36 @@ def main():
 
         input("""
     Press Enter  """)
+
+
+def homeLodging(player):
+
+    while True:
+
+        clearScreen()
+        hm.lodgingQuartersHeader()
+        hm.mainMenu(player)
+
+        q = input("""
+    Option #: """)
+
+        if q == "1":
+            goFishing()
+            
+        elif q == "2":
+            pass
+        elif q == "3":
+            pass
+        elif q == "4":
+            pass
+        elif q == "5":
+            clearScreen()
+            hm.inventoryHeader()
+            player.printInventory()
+
+            input("""
+        Press Enter  """)
+    
 
 player = Player()
 location = Location()
@@ -663,6 +703,6 @@ while True:
     # catchSumpn = Fish.newFish()
     # print(catchSumpn)
 
-    main()
+    homeLodging(player)
     input("""
     End of the code. Press Enter  """)

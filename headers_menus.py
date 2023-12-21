@@ -121,8 +121,7 @@ def attentionHeader():
 def mainMenu(player):
     print(f"""
     1. Go fishing!                       2. Bait Bucket
-    3. Bait Shop                         4. Visit {player.quarters}
-    5. View Inventory""")
+    3. Bait Shop (not working)           4. View Inventory""")
 
 
 def basicPlayerInfoHeader(player):
